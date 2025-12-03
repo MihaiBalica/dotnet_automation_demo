@@ -1,5 +1,4 @@
 using ApiTestAutomation.Tests.Config;
-using ApiTestAutomation.Tests.Infrastructure;
 using ApiTestAutomation.Tests.Helpers;
 using ApiTestAutomation.Tests.Models;
 using RestSharp;
@@ -122,15 +121,6 @@ public class NiFiApiClient : BaseApiClient
     public async Task<Processor?> GetProcessorAsync(string processorId)
     {
         LoggerHelper.LogInfo("Getting processor: {ProcessorId}", processorId);
-        
-        var response = await GetAsync($"/processors/{processorId}", GetAuthHeaders());
-        
-        if (!response.IsSuccessful || string.IsNullOrEmpty(response.Content))
-        {
-            LoggerHelper.LogWarning("Failed to get processor: {StatusCode}", response.StatusCode);
-            return null;
-        }
-
         return await GetAsync<Processor>($"/processors/{processorId}", GetAuthHeaders());
     }
 
